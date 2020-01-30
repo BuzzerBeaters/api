@@ -5,7 +5,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const url = 'https://www.basketball-reference.com/boxscores/';
 
-app.use(express.json());
+// app.use(express.json());
 
 const port = process.env.PORT || 3000;
 
@@ -36,8 +36,20 @@ const yolo = async () => {
 }
 
 app.get('/games', async (_, res) => {
-  const data = await yolo();
-  res.send(data)
+  // const data = await yolo();
+  const html = `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Buzzer Beater</title>
+  </head>
+  <body>
+    HELLO
+  </body>
+  </html>`
+  res.send(html)
 })
 
 app.get('/', (_, res) => res.send('It works \o/'))
