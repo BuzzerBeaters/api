@@ -19,5 +19,8 @@
   "homepage": "https://github.com/BuzzerBeaters/api#readme",
   "devDependencies": {
     "express": "^4.17.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
   }
 }
