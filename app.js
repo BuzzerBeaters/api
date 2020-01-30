@@ -35,11 +35,12 @@ const yolo = async () => {
   return data;
 }
 
-app.get('/', async (_, res) => {
+app.get('/games', async (_, res) => {
   const data = await yolo();
-  console.log({data})
   res.send(data)
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.get('/', (_, res) => res.send('It works \o/'))
+
+app.listen(port, () => console.log(`listening on port ${port}!`))
 
