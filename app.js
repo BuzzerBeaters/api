@@ -51,10 +51,21 @@ const getGamesData = async () => {
 
 const renderGames = (data) => {
   return `<li class='game'>
-    <span class='team'>${data.teamA}</span>
-    <span class='vs'>vs</span>
-    <span class='team'>${data.teamB}</span>
+    <span class='team'>${makeName(data.teamA)}</span>
+    <span class='vs'>-</span>
+    <span class='team'>${makeName(data.teamB)}</span>
   </li>`
+}
+
+const makeName = (name) => {
+  const PRESETS = {
+    NY: 'NYC',
+    GS: 'GSW',
+    SA: 'SAS',
+    BK: 'BKL'
+  }
+
+  return PRESETS[name] || name;
 }
 
 app.get('/', async (_, res) => {
@@ -66,7 +77,7 @@ app.get('/', async (_, res) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SAMPLE</title>
-    <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet"> 
     <style>
       body {
         background: black;
@@ -95,15 +106,35 @@ app.get('/', async (_, res) => {
         justify-content: center;
         align-items: center;
         line-height: 1;
-        font-family: "Bangers";
+        font-family: 'Roboto Mono'
       }
+      .games .game:nth-child(1) {
+        text-shadow: 0 0 8px rgba(255, 255, 255, .9);
+      }
+      .games .game:nth-child(2) {opacity:.8}
+      .games .game:nth-child(3) {opacity:.6}
+      .games .game:nth-child(4) {opacity:.4}
+      .games .game:nth-child(5) {opacity:.3}
+      .games .game:nth-child(6) {opacity:.2}
+      .games .game:nth-child(7) {opacity:.1}
+      .games .game:nth-child(8) {opacity:.1}
+      .games .game:nth-child(9) {opacity:.1}
+      .games .game:nth-child(10) {opacity:.08}
+      .games .game:nth-child(11) {opacity:.06}
+      .games .game:nth-child(12) {opacity:.04}
+      .games .game:nth-child(13) {opacity:.02}
+      .games .game:nth-child(14) {opacity:.01}
       .team {
-        font-size: 5rem;
-        line-height: 1;
+        font-size: 1.4rem;
+        line-height: 1.6;
+        width: 4rem;
+        display: inline-block;
+      }
+      .game .team:first-child {
+        text-align: right;
       }
       .vs {
-        font-size: 3.5rem;
-        padding: 0 2rem;
+        padding: 0 .6rem;
       }
     </style>
   </head>
