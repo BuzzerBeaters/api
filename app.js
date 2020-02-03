@@ -3,7 +3,23 @@ const app = express();
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-const url = 'https://www.basketball-reference.com/boxscores/';
+
+let today = new Date();
+today.setDate(today.getDate() - 1); 
+let dd = today.getDate();
+
+let mm = today.getMonth()+1; 
+const yyyy = today.getFullYear();
+if(dd<10) 
+{
+    dd='0'+dd;
+} 
+
+if(mm<10) 
+{
+    mm='0'+mm;
+}
+const url = `https://www.covers.com/Sports/NBA/Matchups?selectedDate=${yyyy}-${mm}-${dd}`;
 
 const port = process.env.PORT || 3000;
 
@@ -17,15 +33,15 @@ const fetchData = async () => {
 const getGamesData = async () => {
   const $ = await fetchData();
   const data = [];
-  $('.teams').each((_, element) => {
+  $('.cmg_matchup_game_box').each((_, element) => {
     const obj = {}
-    obj.loser = $(element).find('.loser td a').text().replace('Final', '')
-    obj.winner = $(element).find('.winner td a').text().replace('Final', '')
+    obj.teamA = $(element).find('.cmg_matchup_list_column_1 .cmg_team_name').text().replace(/[^A-Za-z]/g, "")
+    obj.teamB = $(element).find('.cmg_matchup_list_column_3 .cmg_team_name').text().replace(/[^A-Za-z]/g, "")
 
-    const score1 = $(element).find('.loser .right').first().text()
-    const score2 = $(element).find('.winner .right').first().text()
+    const scoreA = $(element).find('.cmg_matchup_list_score_away').text()
+    const scoreB = $(element).find('.cmg_matchup_list_score_home').text()
 
-    obj.delta = Math.abs(parseInt(score1, 10) - parseInt(score2));
+    obj.delta = Math.abs(parseInt(scoreA, 10) - parseInt(scoreB));
 
     data.push(obj);
   });
@@ -34,11 +50,10 @@ const getGamesData = async () => {
 }
 
 const renderGames = (data) => {
-  const randomizr = Math.random() < 0.5;
   return `<li class='game'>
-    <span class='team'>${randomizr ? data.winner.substr(0, 3) : data.loser.substr(0, 3)}</span>
+    <span class='team'>${data.teamA}</span>
     <span class='vs'>vs</span>
-    <span class='team'>${randomizr ? data.loser.substr(0, 3) : data.winner.substr(0, 3)}</span>
+    <span class='team'>${data.teamB}</span>
   </li>`
 }
 
@@ -58,12 +73,16 @@ app.get('/', async (_, res) => {
         color: white;
         margin: 0;
         padding:0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 100vh;
       }
       .games {
         padding: 0;
         margin: 0;
         list-style: none;
-        height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
