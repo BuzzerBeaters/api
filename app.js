@@ -5,7 +5,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 let today = new Date();
-today.setDate(today.getDate() - 1); 
+// today.setDate(today.getDate() - 1); 
 let dd = today.getDate();
 
 let mm = today.getMonth()+1; 
@@ -51,7 +51,10 @@ const getGamesData = async () => {
 
 const renderGames = (data) => {
   return `<li class='game'>
-    <span class='team'>${makeName(data.teamA)}</span>
+    <span class='team'>
+    <img sr=icons/${makeName(data.teamA)}.svg>
+    ${makeName(data.teamA)}
+    </span>
     <span class='vs'>-</span>
     <span class='team'>${makeName(data.teamB)}</span>
   </li>`
