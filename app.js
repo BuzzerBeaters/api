@@ -5,7 +5,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 let today = new Date();
-today.setDate(today.getDate() - 1); 
+today.setDate(today.getDate() - 1);
 let dd = today.getDate();
 
 let mm = today.getMonth()+1; 
@@ -20,7 +20,6 @@ if(mm<10)
     mm='0'+mm;
 }
 const url = `https://www.covers.com/Sports/NBA/Matchups?selectedDate=${yyyy}-${mm}-${dd}`;
-console.log(url)
 
 const port = process.env.PORT || 3000;
 
@@ -140,9 +139,28 @@ app.get('/', async (_, res) => {
       .vs {
         padding: 0 .6rem;
       }
+      .logo-wrapper {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        z-index: -1;
+      }
+      .logo {
+        flex: 1;
+        opacity: .1;
+        filter: grayscale(1);
+      }
     </style>
   </head>
   <body>
+    <div class='logo-wrapper'>
+      <img class='logo' src='icons/${makeName(games[0].teamA).toLowerCase()}.svg'>
+      <img class='logo' src='icons/${makeName(games[0].teamB).toLowerCase()}.svg'>
+    </div>
     <ul class="games">`;
 
   games.map(game => {
@@ -154,6 +172,9 @@ app.get('/', async (_, res) => {
 })
 
 // app.get('/', (_, res) => res.send('It works \o/'))
+
+
+app.use(express.static('assets'))
 
 app.listen(port, () => console.log(`listening on port ${port}!`))
 
