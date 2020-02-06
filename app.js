@@ -20,6 +20,7 @@ if(mm<10)
     mm='0'+mm;
 }
 const url = `https://www.covers.com/Sports/NBA/Matchups?selectedDate=${yyyy}-${mm}-${dd}`;
+console.log(url)
 
 const port = process.env.PORT || 3000;
 
