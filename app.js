@@ -4,26 +4,24 @@ const app = express();
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-let today = new Date();
-today.setDate(today.getDate() - 1);
-let dd = today.getDate();
-
-let mm = today.getMonth()+1; 
-const yyyy = today.getFullYear();
-if(dd<10) 
-{
-    dd='0'+dd;
-} 
-
-if(mm<10) 
-{
-    mm='0'+mm;
-}
-const url = `https://www.covers.com/Sports/NBA/Matchups?selectedDate=${yyyy}-${mm}-${dd}`;
-
 const port = process.env.PORT || 3000;
 
 const fetchData = async () => {
+  let today = new Date();
+  today.setDate(today.getDate() - 1);
+  let dd = today.getDate();
+
+  let mm = today.getMonth() + 1;
+  const yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  const url = `https://www.covers.com/Sports/NBA/Matchups?selectedDate=${yyyy}-${mm}-${dd}`;
+
   const result = await axios.get(url);
   return cheerio.load(result.data);
 };
