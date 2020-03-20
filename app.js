@@ -13,7 +13,7 @@ const renderGames = (data) => {
     </span>
     <span class='vs'>-</span>
     <span class='team'>${makeName(data.teamB)}</span>
-    <span class='vs'>  |  ${data.date}</span>
+    <span>${data.date}</span>
   </li>`
 }
 
@@ -41,23 +41,23 @@ app.get('/', async (_, res) => {
       body {
         background: black;
         color: white;
+        display: flex;
+        justify-content: center;
       }
       .games {
-        padding: 0;
-        margin: 2rem 0;
-        list-style: none;
+        margin: 2rem;
       }
       .game {
-        padding: 0;
-        margin: 0;
         line-height: 1;
-        font-family: 'Roboto Mono'
+        font-family: 'Roboto Mono';
+        color: #555;
       }
       .team {
         font-size: 1.4rem;
         line-height: 1.6;
         width: 4rem;
         display: inline-block;
+        color: white;
       }
       .game .team:first-child {
         text-align: right;
@@ -68,13 +68,13 @@ app.get('/', async (_, res) => {
     </style>
   </head>
   <body>
-    <ul class="games">`;
+    <ol class="games">`;
 
     GAMES.sort((a,b) => a.delta > b.delta ? 1 : -1).map(game => {
     html += renderGames(game)
   })
 
-  html += '</ul></body></html>';
+  html += '</ol></body></html>';
   res.send(html)
 })
 
