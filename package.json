@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/BuzzerBeaters/api#readme",
   "devDependencies": {
+    "dateformat": "^3.0.3",
     "express": "^4.17.1"
   },
   "dependencies": {
